@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WLAN Hotspot Creator", "WLAN Hotspot Creator\WLAN Hotspot Creator.vbproj", "{92F2726F-DBD0-48D5-BF99-D9182BBECF83}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4C2280ED-D430-4628-961F-821F47DAD8EE} = {4C2280ED-D430-4628-961F-821F47DAD8EE}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcsManagerLibrary", "IcsManagerLibrary\IcsManagerLibrary.csproj", "{4C2280ED-D430-4628-961F-821F47DAD8EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92F2726F-DBD0-48D5-BF99-D9182BBECF83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92F2726F-DBD0-48D5-BF99-D9182BBECF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92F2726F-DBD0-48D5-BF99-D9182BBECF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92F2726F-DBD0-48D5-BF99-D9182BBECF83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C2280ED-D430-4628-961F-821F47DAD8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C2280ED-D430-4628-961F-821F47DAD8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C2280ED-D430-4628-961F-821F47DAD8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C2280ED-D430-4628-961F-821F47DAD8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
