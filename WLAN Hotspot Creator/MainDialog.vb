@@ -4,6 +4,9 @@ Imports IcsManagerLibrary
 
 Public Class MainDialog
 
+    Public SysPath As String = Environment.GetFolderPath(Environment.SpecialFolder.System)
+    Public CommandSeperator As String = "&&"
+
     Private Sub StartUpRegistryCheck()
 
         Dim SSID_Val_Status As Boolean
@@ -88,6 +91,40 @@ Public Class MainDialog
             End Try
         End If
 
+
+    End Sub
+
+    Private Sub GetIcsAdapters()
+
+        connectionComboBox.Items.Clear()
+
+        Dim connectionScope As New ManagementScope()
+        Dim connectionQuery As New SelectQuery("Win32_NetworkAdapter", "NetConnectionStatus=2")
+        Dim searcher As New ManagementObjectSearcher(connectionScope, connectionQuery)
+
+        Try
+            For Each item As ManagementObject In searcher.[Get]()
+                Dim connectionId As String = item("NetConnectionID").ToString()
+
+                connectionComboBox.Items.Add(connectionId)
+
+            Next
+        Catch
+        End Try
+
+        If connectionComboBox.Items.Count = 0 Then
+            connectionComboBox.Items.Add("No connection Avilable!")
+        End If
+
+        connectionComboBox.SelectedIndex = 0
+
+    End Sub
+
+    Private Sub IcsRefreshThread_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles IcsRefreshThread.DoWork
+
+        refreshConnectionButton.Enabled = False
+        GetIcsAdapters()
+        refreshConnectionButton.Enabled = True
 
     End Sub
 
@@ -183,6 +220,36 @@ Public Class MainDialog
 
     End Sub
 
+    Private Sub ConnectIcs()
+
+        If connectionComboBox.SelectedItem.ToString = "No connection Avilable!" Then
+            StatusLbl.Text = "Status: Hotspot started without ICS!"
+            startButton.Text = "&Stop"
+            startButton.Enabled = True
+        Else
+            StatusLbl.Text = "Status: Trying to create ICS with " & connectionComboBox.SelectedItem.ToString & "."
+            Try
+                IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName("Wi-Fi Hotspot"))
+                StatusLbl.Text = "Status: Shared with " & connectionComboBox.SelectedItem.ToString & "."
+                startButton.Text = "&Stop"
+                startButton.Enabled = True
+            Catch
+                StatusLbl.Text = "Status: Network shell busy, retrying ICS with " & connectionComboBox.SelectedItem.ToString & "."
+                'startButton.Text = "&Stop"
+                'startButton.Enabled = True
+                ConnectIcs()
+            End Try
+
+        End If
+
+    End Sub
+
+    Private Sub IcsConnectThread_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles IcsConnectThread.DoWork
+
+        ConnectIcs()
+
+    End Sub
+
     Private Sub ConnectFunction()
 
         startButton.Enabled = False
@@ -208,11 +275,11 @@ Public Class MainDialog
             Dim PSWD As String
             PSWD = """" & passwordTextBox.Text & """"
 
-            Dim SysPath As String
-            SysPath = Environment.GetFolderPath(Environment.SpecialFolder.System)
+            'Dim SysPath As String
+            'SysPath = Environment.GetFolderPath(Environment.SpecialFolder.System)
 
-            Dim CommandSeperator As String
-            CommandSeperator = "&&"
+            'Dim CommandSeperator As String
+            'CommandSeperator = "&&"
 
             If System.IO.File.Exists(SysPath & "\netsh.exe") Then
                 Dim ConnectionProcess = New Process
@@ -274,11 +341,11 @@ Public Class MainDialog
 
         IcsManager.ShareConnection(Nothing, Nothing)
 
-        Dim SysPath As String
-        SysPath = Environment.GetFolderPath(Environment.SpecialFolder.System)
+        'Dim SysPath As String
+        'SysPath = Environment.GetFolderPath(Environment.SpecialFolder.System)
 
-        Dim CommandSeperator As String
-        CommandSeperator = "&&"
+        'Dim CommandSeperator As String
+        'CommandSeperator = "&&"
 
         If System.IO.File.Exists(SysPath & "\netsh.exe") Then
             Dim ConnectionProcess = New Process
@@ -362,73 +429,9 @@ Public Class MainDialog
 
     End Sub
 
-    Private Sub GetIcsAdapters()
-
-        connectionComboBox.Items.Clear()
-
-        Dim connectionScope As New ManagementScope()
-        Dim connectionQuery As New SelectQuery("Win32_NetworkAdapter", "NetConnectionStatus=2")
-        Dim searcher As New ManagementObjectSearcher(connectionScope, connectionQuery)
-
-        Try
-            For Each item As ManagementObject In searcher.[Get]()
-                Dim connectionId As String = item("NetConnectionID").ToString()
-
-                connectionComboBox.Items.Add(connectionId)
-
-            Next
-        Catch
-        End Try
-
-        If connectionComboBox.Items.Count = 0 Then
-            connectionComboBox.Items.Add("No connection Avilable!")
-        End If
-
-        connectionComboBox.SelectedIndex = 0
-
-    End Sub
-
-    Private Sub ConnectIcs()
-
-        If connectionComboBox.SelectedItem.ToString = "No connection Avilable!" Then
-            StatusLbl.Text = "Status: Hotspot started without ICS!"
-            startButton.Text = "&Stop"
-            startButton.Enabled = True
-        Else
-            StatusLbl.Text = "Status: Trying to create ICS with " & connectionComboBox.SelectedItem.ToString & "."
-            Try
-                IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName("Wi-Fi Hotspot"))
-                StatusLbl.Text = "Status: Shared with " & connectionComboBox.SelectedItem.ToString & "."
-                startButton.Text = "&Stop"
-                startButton.Enabled = True
-            Catch
-                StatusLbl.Text = "Status: Network shell busy, retrying ICS with " & connectionComboBox.SelectedItem.ToString & "."
-                'startButton.Text = "&Stop"
-                'startButton.Enabled = True
-                ConnectIcs()
-            End Try
-
-        End If
-
-    End Sub
-
-    Private Sub IcsRefreshThread_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles IcsRefreshThread.DoWork
-
-        refreshConnectionButton.Enabled = False
-        GetIcsAdapters()
-        refreshConnectionButton.Enabled = True
-
-    End Sub
-
     Private Sub refreshConnectionButton_Click(sender As Object, e As EventArgs) Handles refreshConnectionButton.Click
 
         IcsRefreshThread.RunWorkerAsync()
-
-    End Sub
-
-    Private Sub IcsConnectThread_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles IcsConnectThread.DoWork
-
-        ConnectIcs()
 
     End Sub
 
