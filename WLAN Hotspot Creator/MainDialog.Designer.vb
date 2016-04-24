@@ -90,7 +90,7 @@ Partial Class MainDialog
         '
         Me.OpenAppTrayMenuItm.Name = "OpenAppTrayMenuItm"
         Me.OpenAppTrayMenuItm.Size = New System.Drawing.Size(142, 22)
-        Me.OpenAppTrayMenuItm.Text = "&Open Application"
+        Me.OpenAppTrayMenuItm.Text = "Open &Application"
         '
         'ExitTrayMenuItm
         '
@@ -229,6 +229,7 @@ Partial Class MainDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "MainDialog"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WLAN Hotspot Creator"
         CType(Me.VisualStyler, System.ComponentModel.ISupportInitialize).EndInit()
@@ -253,11 +254,11 @@ Partial Class MainDialog
     Friend WithEvents StatusLbl As Label
     Friend WithEvents ShowPasswordChkBox As CheckBox
     Private WithEvents CurrentRegistryWriteThread As System.ComponentModel.BackgroundWorker
-    Private WithEvents ConsoleThread As System.ComponentModel.BackgroundWorker
     Public WithEvents startButton As Button
     Public WithEvents passwordTextBox As TextBox
     Public WithEvents ssidTextBox As TextBox
     Private WithEvents TrayMenuStrip As ContextMenuStrip
     Private WithEvents IcsRefreshThread As System.ComponentModel.BackgroundWorker
     Private WithEvents IcsConnectThread As System.ComponentModel.BackgroundWorker
+    Private WithEvents ConsoleThread As System.ComponentModel.BackgroundWorker
 End Class

@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{92F2726F-DBD0-48D5-BF99-D9182BBECF83}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>WLANHotspotCreator.My.MyApplication</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <RootNamespace>WLANHotspotCreator</RootNamespace>
     <AssemblyName>WLANHotspotCreator</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>

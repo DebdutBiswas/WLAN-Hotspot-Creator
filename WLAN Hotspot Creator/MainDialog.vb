@@ -1,6 +1,8 @@
-﻿Imports Microsoft.Win32
+﻿Imports WLANHotspotCreator.TrayStartUp
+Imports Microsoft.Win32
 Imports System.Management
 Imports IcsManagerLibrary
+Imports System.ComponentModel
 
 Public Class MainDialog
 
@@ -435,4 +437,23 @@ Public Class MainDialog
 
     End Sub
 
+    Private Sub MainDialog_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+        AppTray.Visible = False
+
+    End Sub
+
+    Private Sub MainDialog_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+
+
+
+    End Sub
+
+    Private Sub MainDialog_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+
+        If Me.WindowState = FormWindowState.Minimized Then
+            Me.Visible = False
+        End If
+
+    End Sub
 End Class
