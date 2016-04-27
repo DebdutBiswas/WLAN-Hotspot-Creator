@@ -138,6 +138,7 @@ Public Class MainDialog
             MsgBox("netsh.exe Not found!", MsgBoxStyle.Critical, "Error!")
             Me.Close()
         Else
+            AppTray.Visible = True
             StartUpRegistryCheck()
             IcsRefreshThread.RunWorkerAsync()
         End If
@@ -437,23 +438,49 @@ Public Class MainDialog
 
     End Sub
 
-    Private Sub MainDialog_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Sub MainDialog_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
 
-        AppTray.Visible = False
+        AboutDialog.ShowDialog()
 
     End Sub
 
+    Private Sub MainDialog_Closing(sender As Object, e As FormClosingEventArgs) Handles Me.Closing
+
+        If e.CloseReason = CloseReason.UserClosing Then
+            e.Cancel = True
+            Me.Visible = False
+        End If
+
+    End Sub
+
+    'Public c1 As TrayStartUp
     Private Sub MainDialog_Closed(sender As Object, e As EventArgs) Handles Me.Closed
 
-
+        'c1.TrayAppStartedStatus()
 
     End Sub
 
     Private Sub MainDialog_Resize(sender As Object, e As EventArgs) Handles Me.Resize
 
         If Me.WindowState = FormWindowState.Minimized Then
-            Me.Visible = False
+            Me.Hide()
         End If
 
     End Sub
+
+    Private Sub MainDialog_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+
+        If Me.Visible = False Then
+            AppTray.Visible = False
+        ElseIf Me.Visible = True Then
+            AppTray.Visible = True
+        End If
+
+    End Sub
+
+    Private Sub MainDialog_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        Me.Width = 485
+        Me.Height = 210
+    End Sub
+
 End Class

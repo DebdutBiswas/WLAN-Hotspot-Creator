@@ -65,7 +65,6 @@ Partial Class MainDialog
         Me.AppTray.ContextMenuStrip = Me.TrayMenuStrip
         Me.AppTray.Icon = CType(resources.GetObject("AppTray.Icon"), System.Drawing.Icon)
         Me.AppTray.Text = "WLAN Hotspot Creator"
-        Me.AppTray.Visible = True
         '
         'TrayMenuStrip
         '
@@ -226,8 +225,11 @@ Partial Class MainDialog
         Me.Controls.Add(Me.passwordTextBox)
         Me.Controls.Add(Me.ssidTextBox)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(485, 210)
         Me.Name = "MainDialog"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

@@ -81,26 +81,31 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutDialog.Designer.vb">
+      <DependentUpon>AboutDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AboutDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="MainModule.vb" />
+    <Compile Include="TrayStartUp.vb" />
     <Compile Include="MainDialog.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -108,7 +113,6 @@
       <DependentUpon>MainDialog.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainModule.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -126,6 +130,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutDialog.resx">
+      <DependentUpon>AboutDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainDialog.resx">
       <DependentUpon>MainDialog.vb</DependentUpon>
     </EmbeddedResource>
@@ -134,6 +141,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrayStartUp.resx">
+      <DependentUpon>TrayStartUp.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="connection_icon1_black.ico" />
+    <None Include="Resources\PNGs\connection.png" />
     <None Include="Resources\Icons\connection_icon1_yellow.ico" />
     <None Include="Resources\Icons\connection_icon1_white.ico" />
     <None Include="Resources\Icons\connection_icon1_red.ico" />
