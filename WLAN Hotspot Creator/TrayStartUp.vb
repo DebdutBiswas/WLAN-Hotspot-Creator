@@ -83,9 +83,14 @@ Public Class TrayStartUp
 
     Private Sub ExitTrayMenuItm_Click(sender As Object, e As EventArgs) Handles ExitTrayMenuItm.Click
 
+        'MsgBox("Do you want to exit application?", MsgBoxStyle.YesNo, "WLAN Hotspot Creator")
+        'If Conf.DialogResult = DialogResult.OK Then
         AppTray.Visible = False
         Me.Dispose()
         Application.Exit()
+        'If MsgBoxResult.No Then
+        'End If
+        'End If
 
     End Sub
 

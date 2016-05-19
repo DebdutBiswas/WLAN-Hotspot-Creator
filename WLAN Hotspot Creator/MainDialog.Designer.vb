@@ -130,6 +130,7 @@ Partial Class MainDialog
         Me.connectionComboBox.Location = New System.Drawing.Point(145, 86)
         Me.connectionComboBox.Name = "connectionComboBox"
         Me.connectionComboBox.Size = New System.Drawing.Size(270, 21)
+        Me.connectionComboBox.Sorted = True
         Me.connectionComboBox.TabIndex = 5
         Me.MainDialogToolTip.SetToolTip(Me.connectionComboBox, "Select a network to be shared from the list" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "if you want to create a lan and not " &
         "to share" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "any existing network's internet connection" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "select local lan from the " &
@@ -228,10 +229,9 @@ Partial Class MainDialog
         Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
-        Me.MinimizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(485, 210)
         Me.MinimumSize = New System.Drawing.Size(485, 210)
         Me.Name = "MainDialog"
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WLAN Hotspot Creator"
         CType(Me.VisualStyler, System.ComponentModel.ISupportInitialize).EndInit()

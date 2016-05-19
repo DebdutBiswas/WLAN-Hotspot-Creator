@@ -100,15 +100,15 @@ Public Class MainDialog
 
         connectionComboBox.Items.Clear()
 
-        Dim connectionScope As New ManagementScope()
-        Dim connectionQuery As New SelectQuery("Win32_NetworkAdapter", "NetConnectionStatus=2")
-        Dim searcher As New ManagementObjectSearcher(connectionScope, connectionQuery)
+        Dim InternetShareableAdapterScope As New ManagementScope()
+        Dim InternetShareableAdapterQuery As New SelectQuery("Win32_NetworkAdapter", "NetConnectionStatus=2")
+        Dim InternetShareableAdapterSearcher As New ManagementObjectSearcher(InternetShareableAdapterScope, InternetShareableAdapterQuery)
 
         Try
-            For Each item As ManagementObject In searcher.[Get]()
-                Dim connectionId As String = item("NetConnectionID").ToString()
+            For Each InternetShareableAdapter As ManagementObject In InternetShareableAdapterSearcher.[Get]()
+                Dim InternetShareableAdapterId As String = InternetShareableAdapter("NetConnectionID").ToString()
 
-                connectionComboBox.Items.Add(connectionId)
+                connectionComboBox.Items.Add(InternetShareableAdapterId)
 
             Next
         Catch
@@ -140,7 +140,9 @@ Public Class MainDialog
         Else
             AppTray.Visible = True
             StartUpRegistryCheck()
-            IcsRefreshThread.RunWorkerAsync()
+            If startButton.Text = "&Start" Then
+                IcsRefreshThread.RunWorkerAsync()
+            End If
         End If
 
     End Sub
@@ -176,11 +178,13 @@ Public Class MainDialog
     End Sub
 
     Public Sub TrayStartingStatus()
+
         AppTray.Icon = My.Resources.connection_icon_blue
         AppTray.BalloonTipIcon = ToolTipIcon.Info
         AppTray.BalloonTipTitle = "WiFi Hotspot Status"
         AppTray.BalloonTipText = "Creating Hotspot..."
         AppTray.ShowBalloonTip(500)
+
     End Sub
 
     Public Sub TrayStartedStatus()
@@ -231,9 +235,33 @@ Public Class MainDialog
             startButton.Enabled = True
         Else
             StatusLbl.Text = "Status: Trying to create ICS with " & connectionComboBox.SelectedItem.ToString & "."
+            '--------------------------------------------------------------------------------------------
+            Dim IcsVirtualAdapterScope As New ManagementScope()
+            Dim IcsVirtualAdapterQuery As New SelectQuery("Win32_NetworkAdapter", "Description=""Microsoft Hosted Network Virtual Adapter""")
+            Dim IcsVirtualAdapterSearcher As New ManagementObjectSearcher(IcsVirtualAdapterScope, IcsVirtualAdapterQuery)
+            'Dim IcsVirtualAdapterIdArray As New ComboBox
+
             Try
-                IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName("Wi-Fi Hotspot"))
-                StatusLbl.Text = "Status: Shared with " & connectionComboBox.SelectedItem.ToString & "."
+                For Each IcsVirtualAdapter As ManagementObject In IcsVirtualAdapterSearcher.[Get]()
+                    Dim IcsVirtualAdapterId As String = IcsVirtualAdapter("NetConnectionID").ToString()
+                    IcsVirtualAdapterIdArray.Items.Add(IcsVirtualAdapterId)
+                Next
+            Catch
+
+            End Try
+
+            If IcsVirtualAdapterIdArray.Items.Count > 1 Then
+                VirtualAdapterSelectionDialog.ShowDialog()
+            Else
+                IcsVirtualAdapterId = IcsVirtualAdapterIdArray.SelectedItem.ToString
+            End If
+
+            IcsVirtualAdapterIdArray.Items.Clear()
+            '--------------------------------------------------------------------------------------------
+            Try
+                IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName(IcsVirtualAdapterId))
+                'IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName(IcsVirtualAdapterIdArray.ToList(0)))
+                StatusLbl.Text = "Status: Shared internet from " & connectionComboBox.SelectedItem.ToString & " to " & IcsVirtualAdapterId & "."
                 startButton.Text = "&Stop"
                 startButton.Enabled = True
             Catch
@@ -372,6 +400,7 @@ Public Class MainDialog
                     If ProcessSuccess.Contains("The hosted network stopped") Then
                         StatusLbl.Text = "Status: Hotspot stopped!"
                         EnableUserInterface()
+                        IcsRefreshThread.RunWorkerAsync()
                         startButton.Text = "&Start"
                         startButton.Enabled = True
                         TrayStoppedStatus()
@@ -462,9 +491,9 @@ Public Class MainDialog
 
     Private Sub MainDialog_Resize(sender As Object, e As EventArgs) Handles Me.Resize
 
-        If Me.WindowState = FormWindowState.Minimized Then
-            Me.Hide()
-        End If
+        'If Me.WindowState = FormWindowState.Minimized Then
+        'Me.Hide()
+        'End If
 
     End Sub
 
@@ -479,8 +508,10 @@ Public Class MainDialog
     End Sub
 
     Private Sub MainDialog_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+
         Me.Width = 485
         Me.Height = 210
+
     End Sub
 
 End Class

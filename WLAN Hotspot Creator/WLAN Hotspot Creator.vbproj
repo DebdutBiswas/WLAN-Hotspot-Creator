@@ -128,6 +128,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="VirtualAdapterSelectionDialog.Designer.vb">
+      <DependentUpon>VirtualAdapterSelectionDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualAdapterSelectionDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutDialog.resx">
@@ -144,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TrayStartUp.resx">
       <DependentUpon>TrayStartUp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VirtualAdapterSelectionDialog.resx">
+      <DependentUpon>VirtualAdapterSelectionDialog.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
