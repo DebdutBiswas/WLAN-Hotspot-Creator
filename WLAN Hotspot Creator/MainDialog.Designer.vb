@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class MainDialog
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class MainDialog
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainDialog))
@@ -46,7 +46,6 @@ Partial Class MainDialog
         Me.CurrentRegistryWriteThread = New System.ComponentModel.BackgroundWorker()
         Me.IcsRefreshThread = New System.ComponentModel.BackgroundWorker()
         Me.IcsConnectThread = New System.ComponentModel.BackgroundWorker()
-        Me.GetIcsVirtualAdapterThread = New System.ComponentModel.BackgroundWorker()
         CType(Me.VisualStyler, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TrayMenuStrip.SuspendLayout()
         Me.SuspendLayout()
@@ -264,5 +263,4 @@ Partial Class MainDialog
     Private WithEvents IcsRefreshThread As System.ComponentModel.BackgroundWorker
     Private WithEvents IcsConnectThread As System.ComponentModel.BackgroundWorker
     Private WithEvents ConsoleThread As System.ComponentModel.BackgroundWorker
-    Private WithEvents GetIcsVirtualAdapterThread As System.ComponentModel.BackgroundWorker
 End Class
