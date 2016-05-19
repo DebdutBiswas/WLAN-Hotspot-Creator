@@ -258,17 +258,19 @@ Public Class MainDialog
             End If
 
             IcsVirtualAdapterIdArray.Items.Clear()
+            StatusLbl.Text = "Status: Selected virtual adapter: " & IcsVirtualAdapterId & "."
+            Threading.Thread.Sleep(1000)
             '--------------------------------------------------------------------------------------------
             Try
-                IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName(IcsVirtualAdapterId))
-                'IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName(IcsVirtualAdapterIdArray.ToList(0)))
-                StatusLbl.Text = "Status: Shared internet from " & connectionComboBox.SelectedItem.ToString & " to " & IcsVirtualAdapterId & "."
+                IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName(IcsVirtualAdapterId.ToString))
+                StatusLbl.Text = "Status: Shared internet from " & connectionComboBox.SelectedItem.ToString & " to " & IcsVirtualAdapterId.ToString & "."
                 startButton.Text = "&Stop"
                 startButton.Enabled = True
             Catch
                 StatusLbl.Text = "Status: Network shell busy, retrying ICS with " & connectionComboBox.SelectedItem.ToString & "."
                 'startButton.Text = "&Stop"
                 'startButton.Enabled = True
+                Threading.Thread.Sleep(1000)
                 ConnectIcs()
             End Try
 

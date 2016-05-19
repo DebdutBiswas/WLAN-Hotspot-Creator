@@ -3,7 +3,7 @@
 
         IcsVirtualAdapterIdComboBox.Items.Clear()
 
-        For Each IcsVirtualAdapter As Object In IcsVirtualAdapterIdArray.Items
+        For Each IcsVirtualAdapter As String In IcsVirtualAdapterIdArray.Items
             IcsVirtualAdapterIdComboBox.Items.Add(IcsVirtualAdapter)
         Next
 
