@@ -227,6 +227,41 @@ Public Class MainDialog
 
     End Sub
 
+    Private Sub GetIcsVirtualAdapters()
+
+        Dim IcsVirtualAdapterScope As New ManagementScope()
+        Dim IcsVirtualAdapterQuery As New SelectQuery("Win32_NetworkAdapter", "Description=""Microsoft Hosted Network Virtual Adapter""")
+        Dim IcsVirtualAdapterSearcher As New ManagementObjectSearcher(IcsVirtualAdapterScope, IcsVirtualAdapterQuery)
+        'Dim IcsVirtualAdapterIdArray As New ComboBox
+
+        Try
+            For Each IcsVirtualAdapter As ManagementObject In IcsVirtualAdapterSearcher.[Get]()
+                Dim IcsVirtualAdapterId As String = IcsVirtualAdapter("NetConnectionID").ToString()
+                IcsVirtualAdapterIdArray.Items.Add(IcsVirtualAdapterId)
+            Next
+        Catch
+
+        End Try
+
+        If IcsVirtualAdapterIdArray.Items.Count > 1 Then
+            VirtualAdapterSelectionDialog.ShowDialog()
+        Else
+            IcsVirtualAdapterIdArray.SelectedIndex = 0
+            IcsVirtualAdapterId = IcsVirtualAdapterIdArray.SelectedItem.ToString
+        End If
+
+        IcsVirtualAdapterIdArray.Items.Clear()
+        StatusLbl.Text = "Status: Selected virtual adapter: " & IcsVirtualAdapterId & "."
+
+    End Sub
+
+    Private Sub GetIcsVirtualAdapterThread_DoWork(sender As Object, e As DoWorkEventArgs) Handles GetIcsVirtualAdapterThread.DoWork
+
+        GetIcsVirtualAdapters()
+
+    End Sub
+
+
     Private Sub ConnectIcs()
 
         If connectionComboBox.SelectedItem.ToString = "No connection Avilable!" Then
@@ -235,34 +270,10 @@ Public Class MainDialog
             startButton.Enabled = True
         Else
             StatusLbl.Text = "Status: Trying to create ICS with " & connectionComboBox.SelectedItem.ToString & "."
-            '--------------------------------------------------------------------------------------------
-            Dim IcsVirtualAdapterScope As New ManagementScope()
-            Dim IcsVirtualAdapterQuery As New SelectQuery("Win32_NetworkAdapter", "Description=""Microsoft Hosted Network Virtual Adapter""")
-            Dim IcsVirtualAdapterSearcher As New ManagementObjectSearcher(IcsVirtualAdapterScope, IcsVirtualAdapterQuery)
-            'Dim IcsVirtualAdapterIdArray As New ComboBox
+            GetIcsVirtualAdapterThread.RunWorkerAsync()
 
             Try
-                For Each IcsVirtualAdapter As ManagementObject In IcsVirtualAdapterSearcher.[Get]()
-                    Dim IcsVirtualAdapterId As String = IcsVirtualAdapter("NetConnectionID").ToString()
-                    IcsVirtualAdapterIdArray.Items.Add(IcsVirtualAdapterId)
-                Next
-            Catch
-
-            End Try
-
-            If IcsVirtualAdapterIdArray.Items.Count > 1 Then
-                VirtualAdapterSelectionDialog.ShowDialog()
-            Else
-                IcsVirtualAdapterIdArray.SelectedIndex = 0
-                IcsVirtualAdapterId = IcsVirtualAdapterIdArray.SelectedItem.ToString
-            End If
-
-            IcsVirtualAdapterIdArray.Items.Clear()
-            StatusLbl.Text = "Status: Selected virtual adapter: " & IcsVirtualAdapterId & "."
-            Threading.Thread.Sleep(1000)
-            '--------------------------------------------------------------------------------------------
-            Try
-                IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName(IcsVirtualAdapterId.ToString))
+                IcsManager.ShareConnection(IcsManager.GetConnectionByName(connectionComboBox.SelectedItem.ToString), IcsManager.GetConnectionByName(IcsVirtualAdapterId))
                 StatusLbl.Text = "Status: Shared internet from " & connectionComboBox.SelectedItem.ToString & " to " & IcsVirtualAdapterId.ToString & "."
                 startButton.Text = "&Stop"
                 startButton.Enabled = True

@@ -46,6 +46,7 @@ Partial Class MainDialog
         Me.CurrentRegistryWriteThread = New System.ComponentModel.BackgroundWorker()
         Me.IcsRefreshThread = New System.ComponentModel.BackgroundWorker()
         Me.IcsConnectThread = New System.ComponentModel.BackgroundWorker()
+        Me.GetIcsVirtualAdapterThread = New System.ComponentModel.BackgroundWorker()
         CType(Me.VisualStyler, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TrayMenuStrip.SuspendLayout()
         Me.SuspendLayout()
@@ -263,4 +264,5 @@ Partial Class MainDialog
     Private WithEvents IcsRefreshThread As System.ComponentModel.BackgroundWorker
     Private WithEvents IcsConnectThread As System.ComponentModel.BackgroundWorker
     Private WithEvents ConsoleThread As System.ComponentModel.BackgroundWorker
+    Private WithEvents GetIcsVirtualAdapterThread As System.ComponentModel.BackgroundWorker
 End Class

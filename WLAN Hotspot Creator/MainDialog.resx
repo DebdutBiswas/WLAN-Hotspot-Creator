@@ -3691,4 +3691,7 @@
   <metadata name="IcsConnectThread.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>161, 46</value>
   </metadata>
+  <metadata name="GetIcsVirtualAdapterThread.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>324, 46</value>
+  </metadata>
 </root>
