@@ -253,6 +253,7 @@ Public Class MainDialog
             If IcsVirtualAdapterIdArray.Items.Count > 1 Then
                 VirtualAdapterSelectionDialog.ShowDialog()
             Else
+                IcsVirtualAdapterIdArray.SelectedIndex = 0
                 IcsVirtualAdapterId = IcsVirtualAdapterIdArray.SelectedItem.ToString
             End If
 
