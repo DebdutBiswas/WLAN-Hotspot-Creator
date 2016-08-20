@@ -1,9 +1,8 @@
 <html lang="en-US">
     <head>
-		<meta name="viewport" content="width=512px">
-		<link rel="stylesheet" type="text/css" href="https://devsoftwaredevelopment.com/Resources/CSS/Fonts.css">
+	<meta name="viewport" content="width=512px">
+	<link rel="stylesheet" type="text/css" href="https://devsoftwaredevelopment.com/Resources/CSS/Fonts.css">
         <link rel="stylesheet" type="text/css" href="https://devsoftwaredevelopment.com/Resources/CSS/Page.css">
-        <title>Dev Software Development</title>
     </head>
     <body id="Body">
             <div id="BodyMainSection" class="TopToBottomSlide" style="position: relative">
