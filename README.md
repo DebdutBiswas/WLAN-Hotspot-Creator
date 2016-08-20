@@ -4,6 +4,7 @@
     <title>WiFi Hotspot Creator</title>
 </head>
 <body>
+    <center>
     <div dir="ltr" style="text-align: left;" trbidi="on">
         <div class="separator" style="clear: both; text-align: center;">
             <a href="https://github.com/DebdutBiswas/WLAN-Hotspot-Creator"
@@ -235,5 +236,6 @@ sans-serif;">GitHub Repository</span>
             </span>
         </div>
     </div>
+    </center>
 </body>
 </html>
